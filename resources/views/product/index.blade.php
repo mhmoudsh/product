@@ -27,9 +27,16 @@
 <body>
     <div class="container my-5 ">
         <div class="d-flex justify-content-between align-items-center mb-5">
-            <h1>products</h1>
+
+            <h1><i class="fa-solid fa-sm fa-bag-shopping"></i> products</h1>
             <form class="d-flex align-items-center" action="" method="GET" id="filter_form">
+
                 Items Per page
+                @if (request()->page)
+                    <input type="hidden" name="page" value="{{ request()->page }}" />
+                @endif
+
+
                 <select id="items_count" name="items_count" class="mx-2">
                     <option>5</option>
                     <option {{ request()->items_count == 10 ? 'selected ' : '' }}>10</option>
@@ -68,7 +75,7 @@
             @endforeach
 
         </table>
-        {{ $products->links() }}
+        {{ $products->appends('items_count', request()->items_count)->links() }}
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
