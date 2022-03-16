@@ -21,14 +21,15 @@ Route::get('/', function () {
 
 Route::resource('product', ProductController::class);
 
-Route::get('new-product', function () {
+/* Route::get('new-product', function () {
 
     product::create([
         'productname' => 'New product',
         'price' => 100.8,
-        'image' => 'new.png',
-        'discription' => 'lorem'
+        'image' => 'noimage.png',
+        'description' => 'lorem'
     ]);
 
     return 'Done';
 });
+ */

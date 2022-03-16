@@ -19,6 +19,10 @@
             vertical-align: middle;
         }
 
+        /* .box {
+            position: relative;
+        } */
+
     </style>
 
     <title>product</title>
@@ -26,12 +30,17 @@
 
 <body>
     <div class="container my-5 ">
-        <div class="d-flex justify-content-between align-items-center mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h1><i class="fa-solid fa-sm fa-bag-shopping "></i> products</h1>
+                <a href="{{ route('product.create') }}" class=" btn btn-primary px-5">Add New</a>
 
-            <h1><i class="fa-solid fa-sm fa-bag-shopping"></i> products</h1>
+            </div>
+
+
             <form class="d-flex align-items-center" action="" method="GET" id="filter_form">
-
                 Items Per page
+
                 @if (request()->page)
                     <input type="hidden" name="page" value="{{ request()->page }}" />
                 @endif
@@ -45,10 +54,12 @@
                     <option {{ request()->items_count == 25 ? 'selected ' : '' }}>25</option>
                     <option {{ request()->items_count == 50 ? 'selected ' : '' }}>50</option>
                 </select>
+
                 {{-- <button class="btn btn-info btn-sm">go</button> --}}
 
             </form>
         </div>
+
         <table class="table table-bordered table-striped">
             <tr class="table-info">
                 <th>ID</th>
@@ -75,7 +86,7 @@
             @endforeach
 
         </table>
-        {{ $products->appends('items_count', request()->items_count)->links() }}
+        {{ $products->appends($_GET)->links() }}
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
@@ -94,5 +105,6 @@
 
 
 </body>
+{{-- $@dump($_GET) --}}
 
 </html>
