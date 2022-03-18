@@ -28,7 +28,7 @@
     <div class="container my-5 ">
         <div class="d-flex justify-content-between align-items-center mb-5">
             <div>
-                <h1><i class="fa-solid fa-sm "></i>Insert New Products</h1>
+                <h1><i class="fas fa-plus-circle"></i> Insert New Products </h1>
             </div>
             <a onclick="history.back()" class="btn btn-dark px-5">Return</a>
 

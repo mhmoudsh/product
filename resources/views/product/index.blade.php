@@ -33,7 +33,8 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
                 <h1><i class="fa-solid fa-sm fa-bag-shopping "></i> products</h1>
-                <a href="{{ route('product.create') }}" class=" btn btn-primary px-5">Add New</a>
+                <a href="{{ route('product.create') }}" class=" btn btn-primary px-5">Add New <i
+                        class="fas fa-plus"></i></a>
 
             </div>
 
@@ -47,12 +48,16 @@
 
 
                 <select id="items_count" name="items_count" class="mx-2">
-                    <option>5</option>
+
+                    <option {{ request()->items_count == 5 ? 'selected ' : '' }}>5</option>
                     <option {{ request()->items_count == 10 ? 'selected ' : '' }}>10</option>
                     <option {{ request()->items_count == 15 ? 'selected ' : '' }}>15</option>
                     <option {{ request()->items_count == 20 ? 'selected ' : '' }}>20</option>
                     <option {{ request()->items_count == 25 ? 'selected ' : '' }}>25</option>
                     <option {{ request()->items_count == 50 ? 'selected ' : '' }}>50</option>
+
+                    {{-- <option {{ request()->items_count == 0 ? 'selected ' : '' }}>All</option> --}}
+
                 </select>
 
                 {{-- <button class="btn btn-info btn-sm">go</button> --}}
@@ -105,6 +110,6 @@
 
 
 </body>
-{{-- $@dump($_GET) --}}
+$@dump($_GET)
 
 </html>

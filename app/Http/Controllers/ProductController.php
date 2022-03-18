@@ -42,13 +42,16 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+
+
         $request->validate([
+
             'name' => 'required|min:3|max:20',
             'price' => 'required|numeric',
-            'image' => 'required|image|mimes:png,jpg,jpeg,gif,svg'
+            'image' => 'required|image|mimes:png,jpg,jpeg,gif,svg',
+            'description' => 'max:1000'
         ]);
     }
-
     /**
      * Display the specified resource.
      *
