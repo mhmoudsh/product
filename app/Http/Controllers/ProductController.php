@@ -24,6 +24,7 @@ class ProductController extends Controller
         return view('product.index', compact('products'));
     }
 
+
     /**
      * Show the form for creating a new resource.
      *
@@ -51,6 +52,18 @@ class ProductController extends Controller
             'image' => 'required|image|mimes:png,jpg,jpeg,gif,svg',
             'description' => 'max:1000'
         ]);
+        /* dd($request->all()); */
+        $imgname = 'product_' . time() . rand() . '_' . $request->file('image')->getClientOriginalName();
+        $request->file('image')->move(public_path('uploads'), $imgname);
+
+        product::create([
+            'productname' => $request->name,
+            'price' => $request->price,
+            'image' => $imgname,
+            'description' => $request->description,
+
+        ]);
+        return redirect()->route('product.index')->with('msg', 'You Add A New product ')->with('type', 'success')->with('fa', 'fa-solid fa-check');
     }
     /**
      * Display the specified resource.
@@ -94,6 +107,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        product::destroy($id);
+        return redirect()->route('product.index')->with('msg', 'Product Deleted ')->with('type', 'danger')->with('fa', 'fa-solid fa-trash-can-check');
     }
 }

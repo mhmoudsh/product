@@ -33,8 +33,20 @@
             <a onclick="history.back()" class="btn btn-dark px-5">Return</a>
 
         </div>
+        @if ($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+            </div>
+        @endif
+
         {{-- productname price image discription --}}
-        <form action="{{ route('product.store') }}" method="POST">
+        <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
                 <label>Product Name</label>
@@ -77,8 +89,10 @@
             selector: '#description',
             plugins: 'code'
         });
+        setTimeout(() => {
+            $('.alert').fadeOut()
+        }, 3000);
     </script>
-
 
 </body>
 {{-- $@dump($_GET) --}}

@@ -29,6 +29,12 @@
 </head>
 
 <body>
+    @if (session('msg'))
+        <div class="alert alert-{{ session('type') }}">
+            {{ session('msg') }} <i class="{{ session('fa') }}"></i>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <div class="container my-5 ">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
@@ -55,6 +61,7 @@
                     <option {{ request()->items_count == 20 ? 'selected ' : '' }}>20</option>
                     <option {{ request()->items_count == 25 ? 'selected ' : '' }}>25</option>
                     <option {{ request()->items_count == 50 ? 'selected ' : '' }}>50</option>
+                    {{-- <option {{ request()->items_count == 0 ? 'selected ' : '' }}>0</option> --}}
 
                     {{-- <option {{ request()->items_count == 0 ? 'selected ' : '' }}>All</option> --}}
 
@@ -75,20 +82,31 @@
                 <th>updated_at</th>
                 <th>action</th>
             </tr>
-            @foreach ($products as $product)
-                <tr>
-                    <td>{{ $product->id }}</td>
-                    <td>{{ $product->productname }}</td>
-                    <td>{{ $product->price }}$</td>
-                    <td><img width="80" src="{{ $product->image }}" alt=""></td>
-                    <td>{{ $product->created_at }}</td>
-                    <td>{{ $product->updated_at }}</td>
-                    <td>
-                        <a class="btn btn-primary btn-sm" href="#"> <i class="fas fa-edit "></i> </a>
-                        <a class="btn btn-danger btn-sm" href="#"><i class="fas fa-trash"></i></a>
-                    </td>
-                </tr>
-            @endforeach
+            @if ($products->count() > 0)
+                @foreach ($products as $product)
+                    <tr>
+                        <td>{{ $product->id }}</td>
+                        <td>{{ $product->productname }}</td>
+                        <td>{{ $product->price }}$</td>
+                        <td><img width="80" src="{{ asset('uploads/' . $product->image) }}" alt=""></td>
+                        <td>{{ $product->created_at }}</td>
+                        <td>{{ $product->updated_at }}</td>
+                        <td>
+                            <a class="btn btn-primary btn-sm" href="#"> <i class="fas fa-edit "></i> </a>
+                            {{-- <a class="btn btn-danger btn-sm" href="#"><i class="fas fa-trash"></i></a> --}}
+                            <form class="d-inline" action="{{ route('product.destroy', $product->id) }}"
+                                method="POST">
+                                @csrf
+                                @method('delete')
+                                <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                            </form>
+                        </td>
+
+                    </tr>
+                @endforeach
+            @else
+                <td colspan="7" class="text-center">No Data Found</td>
+            @endif
 
         </table>
         {{ $products->appends($_GET)->links() }}
@@ -106,10 +124,14 @@
             // alert($('#items_count').val())
             $('#filter_form').submit();
         })
+        setTimeout(() => {
+            $('.alert').fadeOut()
+        }, 3000);
+    </script>
     </script>
 
 
 </body>
-$@dump($_GET)
+{{-- @dump($_GET) --}}
 
 </html>
